@@ -23,10 +23,21 @@
 export default {
   data: function () {
     return {
-      list: [
-        { id: 1, item: "Foo" },
-        { id: 2, item: "Bar" }
-      ]
+      list: []
+    }
+  },
+
+  created: function() {
+   this.fetchTodoLists();
+  },
+
+  methods: {
+    fetchTodoLists: function() {
+       const resource = this.$resource('/todolists.json');
+       resource.get()
+        .then(response => {
+           this.list = response.data
+        });
     }
   }
 }
